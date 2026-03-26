@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  db:
+    image: mariadb:latest
+    restart: always
+    environment:
+      - MARIADB_DATABASE=web
+      - MARIADB_ROOT_PASSWORD=qwer1234
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db:/var/lib/mysql
+  backend:
+    build:
+      context: ./Back
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./Back/.env
+    environment:
+      - DB_URL=jdbc:mariadb://db:3306/web
+      - DB_USER=root
+      - DB_PASS=qwer1234
+      - FRONT_URL=http://localhost
+    depends_on:
+      - db
+  frontend:
+    build:
+      context: ./Front
+      dockerfile: Dockerfile
+      args:
+        - VITE_BACKEND_URL=http://localhost:8080
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
