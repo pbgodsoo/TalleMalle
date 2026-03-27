@@ -28,6 +28,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build with Docker
+        working-directory: ./Back
         run: |
           docker build -t pbgodsoo/backend:latest .
           docker push pbgodsoo/backend:latest
