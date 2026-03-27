@@ -54,7 +54,6 @@ target/
 
 # Spring
 *.class
-*.jar
 *.war
 *.ear
 
