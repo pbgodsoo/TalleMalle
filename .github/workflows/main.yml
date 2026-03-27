@@ -16,9 +16,10 @@ jobs:
           distribution: 'temurin'
 
       - name: Build with Gradle
+        working-directory: ./Back
         run: |
-          chmod +x ./Back/gradlew
-          ./Back/gradlew clean bootJar
+          chmod +x gradlew
+          ./gradlew clean bootJar
 
       - name: Docker Login
         uses: docker/login-action@v3
